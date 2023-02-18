@@ -1,3 +1,0 @@
-/Users/sippathamm/Documents/Programming/CLionProjects/MazeGeneration/build/CMakeFiles/MazeGeneration.dir
-/Users/sippathamm/Documents/Programming/CLionProjects/MazeGeneration/build/CMakeFiles/edit_cache.dir
-/Users/sippathamm/Documents/Programming/CLionProjects/MazeGeneration/build/CMakeFiles/rebuild_cache.dir
