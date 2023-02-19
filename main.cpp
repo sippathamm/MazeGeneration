@@ -4,6 +4,8 @@
 #include <thread>
 #include <chrono>
 
+#define GL_SILENCE_DEPRECATION
+
 #include <glfw3.h>
 
 const int Width = 800;
