@@ -7,6 +7,8 @@
 #define GL_SILENCE_DEPRECATION
 #include <glfw3.h>
 
+#define DELAY(A) std::this_thread::sleep_for(std::chrono::milliseconds(A));
+
 const int Width = 800;
 const int Height = 800;
 
@@ -32,63 +34,63 @@ std::vector<std::pair<int, int>> Path;
 
 void DFS (std::stack<std::pair<int, int>> &Stack, int &Visited) {
     while (Visited < N * N) {
-    int X = Stack.top().first;
-    int Y = Stack.top().second;
+        int X = Stack.top().first;
+        int Y = Stack.top().second;
 
-    std::vector<int> Neighbors;
+        std::vector<int> Neighbors;
 
-    // Left
-    if (X > 0 && !Maze[Y][X - 1].Visited) {
-        Neighbors.push_back(TO_WEST);
-    }
-
-    // Right
-    if (X < N - 1 && !Maze[Y][X + 1].Visited) {
-        Neighbors.push_back(TO_EAST);
-    }
-
-    // Top
-    if (Y > 0 && !Maze[Y - 1][X].Visited) {
-        Neighbors.push_back(TO_NORTH);
-    }
-
-    // Bottom
-    if (Y < N - 1 && !Maze[Y + 1][X].Visited) {
-        Neighbors.push_back(TO_SOUTH);
-    }
-
-    if (!Neighbors.empty()) {
-        int RandomNext = Neighbors[rand() % (int)Neighbors.size()];
-        switch (RandomNext) {
-            case TO_WEST:
-                Maze[Y][X - 1].Visited = true;
-                Maze[Y][X - 1].Direction |= TO_EAST;
-                Maze[Y][X].Direction |= TO_WEST;
-                Stack.push(std::make_pair(X - 1, Y + 0));
-                break;
-            case TO_EAST:
-                Maze[Y][X + 1].Visited = true;
-                Maze[Y][X + 1].Direction |= TO_WEST;
-                Maze[Y][X].Direction |= TO_EAST;
-                Stack.push(std::make_pair(X + 1, Y + 0));
-                break;
-            case TO_NORTH:
-                Maze[Y - 1][X].Visited = true;
-                Maze[Y - 1][X].Direction |= TO_SOUTH;
-                Maze[Y][X].Direction |= TO_NORTH;
-                Stack.push(std::make_pair(X + 0, Y - 1));
-                break;
-            case TO_SOUTH:
-                Maze[Y + 1][X].Visited = true;
-                Maze[Y + 1][X].Direction |= TO_NORTH;
-                Maze[Y][X].Direction |= TO_SOUTH;
-                Stack.push(std::make_pair(X + 0, Y + 1));
-                break;
+        // Left
+        if (X > 0 && !Maze[Y][X - 1].Visited) {
+            Neighbors.push_back(TO_WEST);
         }
-        Visited++;
-    } else {
-        Stack.pop();
-    }
+
+        // Right
+        if (X < N - 1 && !Maze[Y][X + 1].Visited) {
+            Neighbors.push_back(TO_EAST);
+        }
+
+        // Top
+        if (Y > 0 && !Maze[Y - 1][X].Visited) {
+            Neighbors.push_back(TO_NORTH);
+        }
+
+        // Bottom
+        if (Y < N - 1 && !Maze[Y + 1][X].Visited) {
+            Neighbors.push_back(TO_SOUTH);
+        }
+
+        if (!Neighbors.empty()) {
+            int RandomNext = Neighbors[rand() % (int)Neighbors.size()];
+            switch (RandomNext) {
+                case TO_WEST:
+                    Maze[Y][X - 1].Visited = true;
+                    Maze[Y][X - 1].Direction |= TO_EAST;
+                    Maze[Y][X].Direction |= TO_WEST;
+                    Stack.push(std::make_pair(X - 1, Y + 0));
+                    break;
+                case TO_EAST:
+                    Maze[Y][X + 1].Visited = true;
+                    Maze[Y][X + 1].Direction |= TO_WEST;
+                    Maze[Y][X].Direction |= TO_EAST;
+                    Stack.push(std::make_pair(X + 1, Y + 0));
+                    break;
+                case TO_NORTH:
+                    Maze[Y - 1][X].Visited = true;
+                    Maze[Y - 1][X].Direction |= TO_SOUTH;
+                    Maze[Y][X].Direction |= TO_NORTH;
+                    Stack.push(std::make_pair(X + 0, Y - 1));
+                    break;
+                case TO_SOUTH:
+                    Maze[Y + 1][X].Visited = true;
+                    Maze[Y + 1][X].Direction |= TO_NORTH;
+                    Maze[Y][X].Direction |= TO_SOUTH;
+                    Stack.push(std::make_pair(X + 0, Y + 1));
+                    break;
+            }
+            Visited++;
+        } else {
+            Stack.pop();
+        }
     }
 }
 
@@ -149,7 +151,7 @@ void DrawCell (float X, float Y, float SizeX, float SizeY, float Red, float Gree
 }
 
 void DrawMaze () {
-    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    DELAY(30)
 
     float PathWidth = 2.0f * Offset;
 
